@@ -16,6 +16,8 @@ import com.example.nutriplan_2.ui.theme.Nutriplan_2Theme
 import com.example.nutriplan_2.MainScreen
 import com.example.nutriplan_2.DetailsScreen
 import com.example.nutriplan_2.SettingsScreen
+import com.example.nutriplan_2.LoginScreen
+import com.example.nutriplan_2.RegisterScreen
 import androidx.navigation.navArgument
 
 class MainActivity : ComponentActivity() {
@@ -35,8 +37,17 @@ fun MyApp() {
     val navController = rememberNavController()
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-        NavHost(navController = navController, startDestination = "main", Modifier.padding(innerPadding)) {
+        NavHost(navController = navController, startDestination = "login", Modifier.padding(innerPadding)) {
+            // Pantalla de login
+            composable("login") { LoginScreen(navController) }
+
+            // Pantalla de registro
+            composable("register") { RegisterScreen(navController) }
+
+            // Pantalla principal
             composable("main") { MainScreen(navController) }
+
+            // Pantalla de detalles
             composable(
                 "details/{nombre}/{peso}/{altura}/{edad}/{objetivo}",
                 arguments = listOf(
@@ -55,11 +66,12 @@ fun MyApp() {
 
                 DetailsScreen(navController, nombre, peso, altura, edad, objetivo)
             }
+
+            // Pantalla de configuración
             composable("settings") { SettingsScreen() }
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
